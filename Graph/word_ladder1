@@ -1,0 +1,58 @@
+class Solution {
+  
+    private class Node{
+        private String val;
+        private Node prev;
+        Node(String s,Node p){
+            this.val=s;
+            this.prev=p;
+        }
+    }
+    
+    private Set<String> adjacentStrings(Set<String>words,Node head){
+        String s=head.val;
+        char arr[]=s.toCharArray();
+        words.remove(s);
+        
+        Set<String>neighbours=new HashSet<>();
+        
+        for(int i=0;i<s.length();i++){
+            for(char j='a';j<='z';j++){
+            if(j==arr[i]) continue;
+                char temp=arr[i];
+                arr[i]=j;
+                String newWord=new String(arr);
+                if(words.contains(newWord)) neighbours.add(newWord);
+                arr[i]=temp;
+            }
+        }
+        return neighbours;
+    }
+    
+    private void generateList(List<List<String>>rs,Node p){
+        LinkedList<String>ls=new LinkedList<>();
+        
+        while(p!=null){
+            ls.addFirst(p.val);
+            p=p.prev;
+        }
+        
+        rs.add(ls);
+    }
+    
+    
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>>rs=new ArrayList<>();
+        Set<String>words=new HashSet<>(wordList);
+        
+        Queue<Node>q=new LinkedList<>();
+        q.add(new Node(beginWord,null));
+        Node head,neighbourNode;
+        
+        while(!q.isEmpty()){
+            int size=q.size();
+            while(size-->0){
+                head=q.poll();
+                
+   
+  
